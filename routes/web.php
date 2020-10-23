@@ -15,6 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', function(){
-    return view('about');
-});
+Route::post('/books', 'BookController@store');
+Route::patch('/books/{book}', 'BookController@update');
