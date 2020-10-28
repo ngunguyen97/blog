@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Author;
+use App\Book;
 use Carbon\Carbon;
 
 class AuthorManagementTest extends TestCase
