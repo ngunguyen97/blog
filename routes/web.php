@@ -12,8 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layout');
 });
+
+Route::get('/customers', 'CustomersController@index');
+Route::get('/customers/create', 'CustomersController@create');
+Route::get('/customers/{customer}', 'CustomersController@show');
+Route::get('/customers/{customer}/edit', 'CustomersController@edit');
+Route::patch('/customers/{customer}', 'CustomersController@update');
+Route::delete('/customers/{customer}', 'CustomersController@destroy');
+Route::post('/customer', 'CustomersController@store')->name('customer');
+
 
 Route::post('/books', 'BookController@store');
 Route::patch('/books/{book}', 'BookController@update');
@@ -21,3 +30,7 @@ Route::delete('/books/{book}', 'BookController@destroy');
 
 
 Route::post('/author', 'AuthorController@store');
+
+Route::get('contact', 'ContactFormController@create');
+Route::post('contact', 'ContactFormController@store');
+
