@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 
 @section('title', 'Add new Customer')
 
@@ -10,7 +10,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-    <form action="{{ route('customer') }}" class="pb-5" method="POST">
+    <form action="{{ route('customers.create') }}" class="pb-5" method="POST">
         @include('customers.form')
         <button type="submit" class="btn btn-primary">Add Customer</button>
     </form>

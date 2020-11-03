@@ -12,17 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('layout');
+    return view('home');
 });
 
-Route::get('/customers', 'CustomersController@index');
-Route::get('/customers/create', 'CustomersController@create');
-Route::get('/customers/{customer}', 'CustomersController@show');
-Route::get('/customers/{customer}/edit', 'CustomersController@edit');
-Route::patch('/customers/{customer}', 'CustomersController@update');
-Route::delete('/customers/{customer}', 'CustomersController@destroy');
-Route::post('/customer', 'CustomersController@store')->name('customer');
+// Route::get('/customers', 'CustomersController@index')->middleware('auth');
+// Route::get('/customers/create', 'CustomersController@create');
+// Route::get('/customers/{customer}', 'CustomersController@show');
+// Route::get('/customers/{customer}/edit', 'CustomersController@edit');
+// Route::patch('/customers/{customer}', 'CustomersController@update');
+// Route::delete('/customers/{customer}', 'CustomersController@destroy');
+// Route::post('/customer', 'CustomersController@store')->name('customer');
 
+Route::resource('customers', 'CustomersController');
 
 Route::post('/books', 'BookController@store');
 Route::patch('/books/{book}', 'BookController@update');
@@ -34,3 +35,7 @@ Route::post('/author', 'AuthorController@store');
 Route::get('contact', 'ContactFormController@create');
 Route::post('contact', 'ContactFormController@store');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
