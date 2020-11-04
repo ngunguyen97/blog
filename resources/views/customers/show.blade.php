@@ -21,4 +21,9 @@
             <p><strong>Company</strong> {{ $customer->company->name }}</p>
         </div>
     </div>
+    @if ($customer->image)
+        <div class="row">
+        <div class="col-md-4"><img src="{{ asset('storage/' . $customer->image) }}" alt="Not Found" class="img-thumbnail"></div>
+        </div>
+    @endif
 @endsection

@@ -10,7 +10,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-    <form action="/customers/{{ $customer->id }}" class="pb-5" method="POST">
+    <form action="/customers/{{ $customer->id }}" class="pb-5" method="POST" enctype="multipart/form-data">
         @method('PATCH')
         @include('customers.form')
         <button type="submit" class="btn btn-primary">Save Customer</button>

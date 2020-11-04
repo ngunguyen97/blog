@@ -18,7 +18,7 @@
         <option value="" disabled>Select customer status</option>
 
         @foreach ($customer->activeOptions() as $activeOptionKey => $activeOptionValue)
-             
+
             <option value="{{ $activeOptionKey }}" {{ $customer->status == $activeOptionKey ? 'selected': ''}}> {{ $activeOptionValue }}</option>
         @endforeach
     </select>
@@ -37,6 +37,14 @@
     </select>
     @if ($errors->has('company_id'))
     <p>{{ $errors->first('company_id') }}</p>
+    @endif
+</div>
+
+<div class="form-group d-flex flex-column">
+    <label for="image">Profile Image</label>
+    <input type="file" name="image" id="image" class="py-3">
+    @if ($errors->has('image'))
+    <p>{{ $errors->first('image') }}</p>
     @endif
 </div>
 @csrf

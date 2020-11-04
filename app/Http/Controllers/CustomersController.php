@@ -32,27 +32,17 @@ class CustomersController extends Controller
     public function store()
     {
 
-        $data = request()->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:customers',
-            'status' => 'required',
-            'company_id' => 'required'
-        ]);
+        $data = $this->validateRequest();
+
+
 
         $customer = Customer::create($data);
 
+        $this->storeImage($customer);
+
         event(new NewCustomerHasRegisterdEvent($customer));
 
-
-
-        // Register to Newsletter
-           dump('Registered to newsletter');
-
-        // Slack notification to Admin
-            dump('Slack message here');
-
-
-        //return redirect('customers');
+        return redirect('customers');
     }
 
     public function show(Customer $customer)
@@ -69,14 +59,10 @@ class CustomersController extends Controller
 
     public function update(Customer $customer)
     {
-        $data = request()->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email',
-            'status' => 'required',
-            'company_id' => 'required'
-        ]);
+        $data = $this->validateRequest();
 
         $customer->update($data);
+        $this->storeImage($customer);
 
         return redirect('customers/' . $customer->id);
     }
@@ -84,5 +70,23 @@ class CustomersController extends Controller
     public function destroy(Customer $customer) {
         $customer->delete();
         return redirect('customers');
+    }
+
+    private function validateRequest() {
+        return request()->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'status' => 'required',
+            'company_id' => 'required',
+            'image' => 'sometimes|file|image|max:5000'
+        ]);
+    }
+
+    private function storeImage($customer) {
+        if(request()->has('image')) {
+            $customer->update([
+                'image' => request()->image->store('uploads', 'public'),
+            ]);
+        }
     }
 }
