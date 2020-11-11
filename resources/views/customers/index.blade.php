@@ -29,7 +29,11 @@
         </div>
     @endforeach
 
-
+    <div class="row py-5">
+        <div class="col-md-12 d-flex justify-content-center">
+            {{ $customers->links() }}
+        </div>
+    </div>
 @endsection
 
 {{-- Lesson: 15- It's gonna start --}}

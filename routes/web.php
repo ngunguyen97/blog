@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\CustomersController;
+
 Route::get('/', function () {
     return view('home');
 });
@@ -23,6 +25,8 @@ Route::get('/', function () {
 // Route::delete('/customers/{customer}', 'CustomersController@destroy');
 // Route::post('/customer', 'CustomersController@store')->name('customer');
 
+Route::get('/customers/search', 'CustomersController@search')->name('customers.search');
+Route::post('/customers/result', 'CustomersController@result')->name('customers.result');
 Route::resource('customers', 'CustomersController');
 
 Route::post('/books', 'BookController@store');

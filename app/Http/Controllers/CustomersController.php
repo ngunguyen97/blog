@@ -8,6 +8,7 @@ use App\Customer;
 use App\Events\NewCustomerHasRegisterdEvent;
 use App\Mail\WelcomeUserMail;
 use Illuminate\Support\Facades\Mail;
+use App\Exceptions\CustomersException;
 
 class CustomersController extends Controller
 {
@@ -17,7 +18,7 @@ class CustomersController extends Controller
     }
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::with('company')->paginate(15);
         return view('customers.index', compact('customers'));
     }
 
@@ -67,12 +68,14 @@ class CustomersController extends Controller
         return redirect('customers/' . $customer->id);
     }
 
-    public function destroy(Customer $customer) {
+    public function destroy(Customer $customer)
+    {
         $customer->delete();
         return redirect('customers');
     }
 
-    private function validateRequest() {
+    private function validateRequest()
+    {
         return request()->validate([
             'name' => 'required|min:3',
             'email' => 'required|email',
@@ -82,11 +85,28 @@ class CustomersController extends Controller
         ]);
     }
 
-    private function storeImage($customer) {
-        if(request()->has('image')) {
+    private function storeImage($customer)
+    {
+        if (request()->has('image')) {
             $customer->update([
                 'image' => request()->image->store('uploads', 'public'),
             ]);
         }
     }
+
+    public function search(Request $request)
+    {
+        return view('customers.search');
+    }
+     public function result(Request $request) {
+
+         try {
+            $user = \App\Customer::find($request->input('user_id'));
+            if(!$user) throw new CustomersException();
+         } catch (\CustomersException $th) {
+             throw $th;
+         }
+
+        return view('customers.result', compact('user'));
+     }
 }
