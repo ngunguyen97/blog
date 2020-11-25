@@ -36,8 +36,8 @@ Route::delete('/books/{book}', 'BookController@destroy');
 
 Route::post('/author', 'AuthorController@store');
 
-Route::get('contact', 'ContactFormController@create');
-Route::post('contact', 'ContactFormController@store');
+// Route::get('contact', 'ContactFormController@create');
+// Route::post('contact', 'ContactFormController@store');
 
 
 Auth::routes();

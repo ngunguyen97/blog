@@ -9,6 +9,7 @@ use App\Events\NewCustomerHasRegisterdEvent;
 use App\Mail\WelcomeUserMail;
 use Illuminate\Support\Facades\Mail;
 use App\Exceptions\CustomersException;
+use Illuminate\Pipeline\Pipeline;
 
 class CustomersController extends Controller
 {
@@ -18,7 +19,10 @@ class CustomersController extends Controller
     }
     public function index()
     {
-        $customers = Customer::with('company')->paginate(15);
+        //$customers = Customer::with('company')->paginate(15);
+
+        $customers = Customer::allPosts();
+
         return view('customers.index', compact('customers'));
     }
 
