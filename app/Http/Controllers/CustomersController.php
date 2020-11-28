@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Company;
 use Illuminate\Http\Request;
 use App\Customer;
@@ -9,6 +10,7 @@ use App\Events\NewCustomerHasRegisterdEvent;
 use App\Mail\WelcomeUserMail;
 use Illuminate\Support\Facades\Mail;
 use App\Exceptions\CustomersException;
+use App\User;
 use Illuminate\Pipeline\Pipeline;
 
 class CustomersController extends Controller
@@ -19,6 +21,7 @@ class CustomersController extends Controller
     }
     public function index()
     {
+        $this->authorize('viewAny', Customer::class);
         //$customers = Customer::with('company')->paginate(15);
 
         $customers = Customer::allPosts();
@@ -36,10 +39,7 @@ class CustomersController extends Controller
 
     public function store()
     {
-
         $data = $this->validateRequest();
-
-
 
         $customer = Customer::create($data);
 
@@ -52,7 +52,7 @@ class CustomersController extends Controller
 
     public function show(Customer $customer)
     {
-
+        $this->authorize('view', $customer);
         return view('customers.show', compact('customer'));
     }
 
