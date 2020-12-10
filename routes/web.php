@@ -12,6 +12,8 @@
 */
 
 use App\Http\Controllers\CustomersController;
+use App\Profile;
+use App\User;
 
 Route::get('/', function () {
     return view('home');
@@ -43,3 +45,17 @@ Route::post('/author', 'AuthorController@store');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/lkc-p', function(){
+    $user = User::find(1);
+    printf("[%s]\n", $user->profile->id_card);
+    printf("[%s]\n", $user->profile->address);
+    printf("[%s]\n", $user->profile->phone);
+});
+
+Route::get('/lkp-c', function(){
+    $profile = Profile::find(1);
+    printf("[%s]\n", $profile->user->id);
+    printf("[%s]\n", $profile->user->name);
+    printf("[%s]\n", $profile->user->email);
+});
