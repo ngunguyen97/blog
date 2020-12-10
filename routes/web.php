@@ -11,8 +11,10 @@
 |
 */
 
+use App\Content;
 use App\Http\Controllers\CustomersController;
 use App\Profile;
+use App\Tag;
 use App\User;
 
 Route::get('/', function () {
@@ -46,16 +48,31 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/lkc-p', function(){
+Route::get('/lkc-p', function () {
     $user = User::find(1);
     printf("[%s]\n", $user->profile->id_card);
     printf("[%s]\n", $user->profile->address);
     printf("[%s]\n", $user->profile->phone);
 });
 
-Route::get('/lkp-c', function(){
+Route::get('/lkp-c', function () {
     $profile = Profile::find(1);
     printf("[%s]\n", $profile->user->id);
     printf("[%s]\n", $profile->user->name);
     printf("[%s]\n", $profile->user->email);
+});
+
+Route::get('/1-1', function () {
+    // $content = Content::find(1);
+    // //dd($content->tags()->get());
+    // foreach($content->tags()->get() as $item) {
+    //    echo $item->id . '<br/>';
+    //    echo $item->name . '<br/>';
+    // }
+
+    $tags = Tag::find(1);
+    foreach ($tags->contents()->get() as $item) {
+        echo $item->title . '<br/>';
+        echo $item->body . '<br/>';
+    }
 });
